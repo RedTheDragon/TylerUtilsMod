@@ -87,6 +87,8 @@ public class TylerUtilsMod extends JavaPlugin {
         getCommand("opitems").setExecutor(new Command_opitems());
         getCommand("personal").setExecutor(new Command_personal());
         getCommand("psl").setExecutor(new Command_personal());
+        getCommand("purple").setExecutor(new Command_purple());
+        getCommand("relogger").setExecutor(new Command_relogger());
         PluginDescriptionFile pdfFile = this.getDescription();
         getLogger().info( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
     }

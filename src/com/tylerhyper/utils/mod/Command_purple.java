@@ -1,13 +1,5 @@
 package com.tylerhyper.utils.mod;
 
-// Implements TotalFreedom so it runs with the mod //
-import me.StevenLawson.TotalFreedomMod.Commands.AdminLevel;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandParameters;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandPermissions;
-import me.StevenLawson.TotalFreedomMod.Commands.SourceType;
-import me.StevenLawson.TotalFreedomMod.Commands.TFM_Command;
-// Would be glad if someone could unimplement this part //
-
 import java.util.Arrays;
 import java.util.List;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
@@ -18,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -26,29 +19,16 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-@CommandPermissions(level = AdminLevel.SUPER, source = SourceType.BOTH)
-@CommandParameters(description = "Graces the world with purple. Command that is pretty pointless unless you are tyler.", usage = "/<command>")
-public class Command_purple extends TFM_Command
-{
-
-    @Override
-    public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
-    {
-     if (!sender.getName().equals("tylerhyperHD") && !sender.getName().equals("_Herobrian35_") && !sender.getName().equals("Alex33856"))
+public class Command_purple implements CommandExecutor {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+     if (!sender.getName().equals("tylerhyperHD") && !sender.getName().equals("Triplewer"))
         {
-            sender_p.sendMessage(ChatColor.RED + "Only Tyler, Hero, and Alex may use this command.\nNo permissions for the people who aren't purple.");
+            Player sender_p = Bukkit.getPlayer(sender.getName());
+            sender_p.sendMessage(ChatColor.RED + "Only Tyler and Trip may use this command.\nNo permissions for the people who aren't purple.");
             sender_p.setHealth(0.0);
-
-            if (!senderIsConsole)
-            {
-                sender.setOp(false);
-            }
-            else
-            {
-                sender_p.sendMessage(ChatColor.RED + "Only Tyler, Hero, and Alex may use this command.\nNo permissions for the people who aren't purple.");
-                sender_p.setHealth(0.0);
-            }
-
             return true;
         }
             if (args.length == 0)
@@ -76,25 +56,26 @@ public class Command_purple extends TFM_Command
                 {
                 World world = player.getWorld();
                 Location loc = player.getLocation();
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                Player sender_different = Bukkit.getPlayer(sender.getName());
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
-                TFM_Util.adminAction(sender_p.getName(), "Gracing the world with purple!", false);
+                TFM_Util.adminAction(sender_different.getName(), "Gracing the world with purple!", false);
                 world.strikeLightningEffect(loc);
                 }
         for(Player player : Bukkit.getOnlinePlayers())

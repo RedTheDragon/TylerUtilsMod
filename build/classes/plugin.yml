@@ -66,3 +66,9 @@ commands:
   psl:
     description: Runs a persoanl command.
     usage: "/psl"
+  relogger:
+    description: Forces senior admins to relog.
+    usage: "/relogger"
+  purple:
+    description: Graces the world with purple
+    usage: "/purple"
