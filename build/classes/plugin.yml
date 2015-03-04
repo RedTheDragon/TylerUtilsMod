@@ -30,3 +30,18 @@ commands:
   blowup:
     description: Make the player blow up.
     usage: "Usage: /blowup <player>"
+  brb:
+    description: Busy atm.
+    usage: "Usage: /brb [on/off]"
+  ci:
+    description: Clear your inventory
+    usage: "Usage: /ci"
+  clear:
+    description: Clear your inventory
+    usage: "Usage: /clear"
+  clearall:
+    description: Clean all supered IPs of all admins
+    usage: "Usage: /clearall"
+  destroy:
+    description: Destroy a player
+    usage: "Usage: /destroy"

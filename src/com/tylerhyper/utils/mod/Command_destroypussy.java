@@ -1,28 +1,23 @@
 package com.tylerhyper.utils.mod;
 
-// Implements TotalFreedom so it runs with the mod //
-import me.StevenLawson.TotalFreedomMod.Commands.AdminLevel;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandParameters;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandPermissions;
-import me.StevenLawson.TotalFreedomMod.Commands.SourceType;
-import me.StevenLawson.TotalFreedomMod.Commands.TFM_Command;
-// Would be glad if someone could unimplement this part //
-
+import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
 import me.StevenLawson.TotalFreedomMod.TotalFreedomMod;
+import static org.bukkit.Bukkit.getPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandPermissions(level = AdminLevel.SUPER, source = SourceType.BOTH)
-@CommandParameters(description = "Dedicated to BAW00 <3", usage = "/<command> <partialname>", aliases = "pussy")
-public class Command_destroypussy extends TFM_Command
-{
-    @Override
-    public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
-    {
+
+public class Command_destroypussy implements CommandExecutor {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        if (TFM_AdminList.isSuperAdmin(sender)) {
         if (args.length != 1)
         {
             return false;
@@ -32,7 +27,7 @@ public class Command_destroypussy extends TFM_Command
 
         if (player == null)
         {
-            playerMsg(TotalFreedomMod.PLAYER_NOT_FOUND, ChatColor.RED);
+            sender.sendMessage(TotalFreedomMod.PLAYER_NOT_FOUND);
             return true;
         }
 
@@ -52,6 +47,7 @@ public class Command_destroypussy extends TFM_Command
         player.setHealth(0);
         player.setOp(false);
 
-        return true;
+    }
+    return true;
     }
 }
