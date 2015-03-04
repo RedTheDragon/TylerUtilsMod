@@ -5,9 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
+import me.StevenLawson.TotalFreedomMod.TFM_Log;
+import static me.StevenLawson.TotalFreedomMod.TFM_Util.DATE_STORAGE_FORMAT;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -24,6 +31,9 @@ public class TylerUtilsMod extends JavaPlugin {
     private final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
     public static Server server;
     public static TylerUtilsMod plugin;
+    public static String buildNumber = "1";
+    public static String buildDate = TylerUtilsMod.buildDate = TylerUtilsMod.dateToString(new Date());
+    public static String buildCreator = "tylerhyperHD";
     public static String pluginName;
     public static String pluginVersion;
     public static final Map<String, EntityType> mobtypes = new HashMap<String, EntityType>();
@@ -57,6 +67,7 @@ public class TylerUtilsMod extends JavaPlugin {
         pm.registerEvents(playerListener, this);
         getLogger().info("Plugin designed by tylerhyperHD");
         getLogger().info("/***********************/");
+        getLogger().info("Compiled " + buildDate + " by " + buildCreator); 
         getLogger().info("TylerUtilsMod for TotalFreedom Servers");
         getLogger().info("/***********************/");
         // Register our commands
@@ -88,7 +99,27 @@ public class TylerUtilsMod extends JavaPlugin {
             return false;
         }
     }
-    
+        private static void setAppProperties()
+    {
+        try
+        {
+            final InputStream in = plugin.getResource("appinfo.properties");
+            Properties props = new Properties();
+
+            // in = plugin.getClass().getResourceAsStream("/appinfo.properties");
+            props.load(in);
+            in.close();
+
+            TylerUtilsMod.buildNumber = props.getProperty("program.buildnumber");
+            TylerUtilsMod.buildDate = props.getProperty("program.builddate");
+            TylerUtilsMod.buildCreator = props.getProperty("program.buildcreator");
+        }
+        catch (Exception ex)
+        {
+            TFM_Log.severe("Could not load App properties to TylerUtilsMod!");
+            TFM_Log.severe(ex);
+        }
+    }
     public static void copy(InputStream in, File file) throws IOException // BukkitLib @ https://github.com/Pravian/BukkitLib
     {
         if (!file.exists())
@@ -132,4 +163,21 @@ public class TylerUtilsMod extends JavaPlugin {
     public void setDebugging(final Player player, final boolean value) {
         debugees.put(player, value);
     }
+        public static String dateToString(Date date)
+    {
+        return new SimpleDateFormat(DATE_STORAGE_FORMAT, Locale.ENGLISH).format(date);
+    }
+
+    public static Date stringToDate(String dateString)
+    {
+        try
+        {
+            return new SimpleDateFormat(DATE_STORAGE_FORMAT, Locale.ENGLISH).parse(dateString);
+        }
+        catch (ParseException pex)
+        {
+            return new Date(0L);
+        }
+    }
+
 }
