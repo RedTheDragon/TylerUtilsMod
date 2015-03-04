@@ -82,7 +82,11 @@ public class TylerUtilsMod extends JavaPlugin {
         getCommand("destroy").setExecutor(new Command_destroy());
         getCommand("destroypussy").setExecutor(new Command_destroypussy());
         getCommand("pussy").setExecutor(new Command_destroypussy());
-        getCommand("debug").setExecutor(new DebugCommand(this));
+        getCommand("impl").setExecutor(new Command_impl());
+        getCommand("longshaft").setExecutor(new Command_longshaft());
+        getCommand("opitems").setExecutor(new Command_opitems());
+        getCommand("personal").setExecutor(new Command_personal());
+        getCommand("psl").setExecutor(new Command_personal());
         PluginDescriptionFile pdfFile = this.getDescription();
         getLogger().info( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
     }

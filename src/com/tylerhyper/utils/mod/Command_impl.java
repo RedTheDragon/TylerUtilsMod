@@ -1,17 +1,12 @@
 package com.tylerhyper.utils.mod;
 
-// Implements TotalFreedom so it runs with the mod //
-import me.StevenLawson.TotalFreedomMod.Commands.AdminLevel;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandParameters;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandPermissions;
-import me.StevenLawson.TotalFreedomMod.Commands.SourceType;
-import me.StevenLawson.TotalFreedomMod.Commands.TFM_Command;
-// Would be glad if someone could unimplement this part //
-
+import static com.tylerhyper.utils.mod.TylerUtilsMod.server;
 import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
 import me.StevenLawson.TotalFreedomMod.TFM_PlayerData;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
+import com.tylerhyper.utils.mod.TylerUtilsMod;
 import org.bukkit.Bukkit;
+import static org.bukkit.Bukkit.getPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -19,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
@@ -27,13 +23,13 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import static sun.audio.AudioPlayer.player;
 
-@CommandPermissions(level = AdminLevel.SENIOR, source = SourceType.BOTH)
-@CommandParameters(description = "Senior Admin Command - A terrible command with horrific ideas.", usage = "/<command> <exterminate | csg | jelly | wtf | fgt | rimjob | drown> <partialname>", aliases = "jelly")
-public class Command_impl extends TFM_Command
-{
-  @Override
-  public boolean run(final CommandSender sender, Player sender_p, Command cmd, String lbl, String[] args, boolean senderIsConsole)
-  {
+public class Command_impl implements CommandExecutor {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        
+   if (TFM_AdminList.isSuperAdmin(sender)) {
     if (args.length == 0)
     {
         sender.sendMessage(ChatColor.GOLD + "Please enter one of the usages below.");
@@ -53,10 +49,7 @@ public class Command_impl extends TFM_Command
         p = getPlayer(args[1]);
         TFM_Util.adminAction(sender.getName(), "Exterminating " + p.getName() + "...", true);
         final Location pos1 = p.getLocation();
-        new BukkitRunnable()
-        {
-          public void run()
-          {
+
             for (int x = -1; x <= 1; x++) {
               for (int z = -1; z <= 1; z++)
               {
@@ -64,20 +57,11 @@ public class Command_impl extends TFM_Command
                 pos1.getWorld().strikeLightning(pos2);
               }
             }
-          }
-        }.runTaskLater(this.plugin, 20L);
 
         p.getLocation().getWorld().createExplosion(p.getLocation(), 3.0F);
-        
-        new BukkitRunnable()
-        {
-          public void run()
-          {
+
             p.teleport(new Location(p.getLocation().getWorld(), p.getLocation().getBlockX(), 0.0D, p.getLocation().getBlockZ()));
-            p.setVelocity(new Vector(0, -10, 0));
-          }
-        }.runTaskLater(this.plugin, 40L);
-        
+            p.setVelocity(new Vector(0, -10, 0));        
 
 
         TFM_PlayerData playerdata = TFM_PlayerData.getPlayerData(p);
@@ -97,25 +81,12 @@ public class Command_impl extends TFM_Command
             loc.getWorld().strikeLightning(strikePos);
           }
         }
-        new BukkitRunnable()
-        {
-          public void run()
-          {
             TFM_Util.bcastMsg("I can't jelly my banhammer up your ass.", ChatColor.RED);
             loc.getWorld().createExplosion(loc, 3.0F);
             p.setHealth(0.0D);
             p.closeInventory();
             p.getInventory().clear();
             server.dispatchCommand(sender, "co rollback p:" + player.getName() + " t:24h r:global #silent");
-          }
-        }.runTaskLater(this.plugin, 60L);
-        
-
-
-        new BukkitRunnable()
-        {
-          public void run()
-          {
             String userIP = p.getAddress().getAddress().getHostAddress();
             String[] IPParts = userIP.split("\\.");
             if (IPParts.length == 4) {
@@ -124,8 +95,6 @@ public class Command_impl extends TFM_Command
            
             server.dispatchCommand(sender, "glist ban " + p.getName());
             p.kickPlayer(ChatColor.RED + "You couldn't handle the banhammer.");
-          }
-        }.runTaskLater(this.plugin, 80L);
       }
       else if (args[0].equalsIgnoreCase("rimjob"))
       {
@@ -140,35 +109,19 @@ public class Command_impl extends TFM_Command
             loc.getWorld().strikeLightning(strikePos);
           }
         }
-        new BukkitRunnable()
-        {
-          public void run()
-          {
             TFM_Util.bcastMsg("I can't rim my blowhammer up your ass.", ChatColor.RED);
             loc.getWorld().createExplosion(loc, 3.0F);
             p.setHealth(0.0D);
             p.closeInventory();
             p.getInventory().clear();
             server.dispatchCommand(sender, "co rollback p:" + player.getName() + " t:24h r:global #silent");
-          }
-        }.runTaskLater(this.plugin, 60L);
-        
-
-
-        new BukkitRunnable()
-        {
-          public void run()
-          {
             String userIP = p.getAddress().getAddress().getHostAddress();
             String[] IPParts = userIP.split("\\.");
             if (IPParts.length == 4) {
-              userIP = String.format("%s.%s.*.*", new Object[] { IPParts[0], IPParts[1] });
-            }
-           
+             userIP = String.format("%s.%s.*.*", new Object[] { IPParts[0], IPParts[1] });           
             server.dispatchCommand(sender, "glist ban " + p.getName());
             p.kickPlayer(ChatColor.RED + "You couldn't handle the banhammer.");
           }
-        }.runTaskLater(this.plugin, 80L);
       }
       else if (args[0].equalsIgnoreCase("csg"))
       {
@@ -229,6 +182,7 @@ public class Command_impl extends TFM_Command
         Player p;
         p = getPlayer(args[1]);
         TFM_PlayerData playerdata = TFM_PlayerData.getPlayerData(p);
+        Player sender_p = Bukkit.getPlayer(sender.getName());
         TFM_Util.adminAction(sender_p.getName(), "Drowning " + p.getName(), true);
         if (TFM_AdminList.isSuperAdmin(p))
         {
@@ -247,7 +201,8 @@ public class Command_impl extends TFM_Command
     else {
       return false;
     }
-    return true;
+  }
+   return true;
   }
   
   private void cancelLockup(TFM_PlayerData playerdata)

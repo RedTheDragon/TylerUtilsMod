@@ -1,30 +1,24 @@
 package com.tylerhyper.utils.mod;
 
-// Implements TotalFreedom so it runs with the mod //
-import me.StevenLawson.TotalFreedomMod.Commands.AdminLevel;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandParameters;
-import me.StevenLawson.TotalFreedomMod.Commands.CommandPermissions;
-import me.StevenLawson.TotalFreedomMod.Commands.SourceType;
-import me.StevenLawson.TotalFreedomMod.Commands.TFM_Command;
-// Would be glad if someone could unimplement this part //
-
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@CommandPermissions(level = AdminLevel.ALL, source = SourceType.BOTH)
-@CommandParameters(description = "Gives a player OP items.", usage = "/<command>")
-public class Command_opitems extends TFM_Command
-{
-    @Override
-    public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
-    {
-        PlayerInventory inv = sender_p.getInventory();
+
+public class Command_opitems implements CommandExecutor {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            return false;
+        }
+        Player player = Bukkit.getPlayer(sender.getName());
+        PlayerInventory inv = player.getInventory();
         ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
         ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
         ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
@@ -67,7 +61,7 @@ public class Command_opitems extends TFM_Command
                 inv.setBoots(boots);
                 inv.setLeggings(leggings);
                 inv.setChestplate(chestplate);
-                sender_p.sendMessage(ChatColor.RED + "Op items have been placed in your inventory.");
+                sender.sendMessage(ChatColor.RED + "Op items have been placed in your inventory.");
                 return true;
             }
  }

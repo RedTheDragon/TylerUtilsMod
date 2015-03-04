@@ -13,8 +13,14 @@ public class Command_clear implements CommandExecutor {
         if (!(sender instanceof Player)) {
             return false;
         }
-      if (TFM_AdminList.isSeniorAdmin(sender))
-        {
+            if (TFM_AdminList.isSeniorAdmin(sender)) {
+            if (args.length == 0) {
+            Player player = (Player)sender;
+            player.closeInventory();
+            player.getInventory().clear();
+            player.sendMessage(ChatColor.GOLD + "Your inventory has been cleared.");
+            return true;
+            }
             if (args.length < 1)
             {
             return false;
@@ -27,22 +33,18 @@ public class Command_clear implements CommandExecutor {
                     player.getInventory().clear();
                     player.sendMessage(ChatColor.GOLD + "Your inventory has been cleared by an Administrator.");
                 }
+                return true;
+            }
             }
             else
             {
+                if (args.length == 0) {
                 Player player = (Player)sender;
                 player.closeInventory();
                 player.getInventory().clear();
                 player.sendMessage(ChatColor.GOLD + "Your inventory has been cleared.");
+                }
             }
-        }
-        else
-      {
-        Player player = (Player)sender;
-        player.closeInventory();
-        player.getInventory().clear();
-        player.sendMessage(ChatColor.GOLD + "Your inventory has been cleared.");
-      }
         return true;
     }
 }

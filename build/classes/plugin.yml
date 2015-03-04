@@ -44,4 +44,25 @@ commands:
     usage: "Usage: /clearall"
   destroy:
     description: Destroy a player
-    usage: "Usage: /destroy"
+    usage: "/destroy <player>"
+  pussy:
+    description: Fuck her right in da pussy
+    usage: "/pussy <player>"
+  destroypussy:
+    description: Fuck her right in da pussy
+    usage: "/destroypussy <player>"
+  opitems:
+    description: Gives the player op items.
+    usage: "/opitems"
+  impl:
+    description: Implies you don't know what you are doing.
+    usage: "/impl"
+  longshaft:
+    description: Gives you a long, hard shaft.
+    usage: "/longshaft"
+  personal:
+    description: Runs a personal command.
+    usage: "/personal"
+  psl:
+    description: Runs a persoanl command.
+    usage: "/psl"
