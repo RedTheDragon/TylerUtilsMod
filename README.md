@@ -1,0 +1,2 @@
+# TylerUtilsMod #
+The TylerUtilsMod is created by tylerhyperHD, a Lead Developer of EpicFreedom. This was coded to run alongside the TotalFreedomMod, made by MadGeek40 and Prozza, and run with CraftBukkit and Spigot servers. All copyrights are for their respected owners. 
